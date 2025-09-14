@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企業官網 - 圖片輪播背景</title>
+    <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/Gemini_Generated_Image_9qcgx29qcgx29qcg.png?alt=media&token=00d95ea0-3b58-43b5-ae41-068dd6c6a256" type="image/png">
+    <!-- 引入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: #4b5563;
+        }
+
+        .fade-out-header {
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .fade-out-header.scrolled {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-header {
+            position: relative;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1f2937;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: #6366f1;
+            border-radius: 9999px;
+        }
+
+        /* 圖片輪播背景樣式 */
+        .hero-bg-slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .bg-slide.active {
+            opacity: 1;
+        }
+
+        /* 永續小知識區塊的連貫動畫 */
+        .slide-fade-in {
+            animation: slideFadeIn 0.8s ease-out forwards;
+        }
+
+        .slide-fade-out {
+            animation: slideFadeOut 0.8s ease-in forwards;
+        }
+
+        .animate-scroll-right {
+             width: max-content;
+             animation: scroll-right 60s linear infinite;
+        }
+
+        @keyframes scroll-right {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes slideFadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideFadeOut {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(-20px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="fixed top-0 left-0 w-full z-50 fade-out-header transition-all duration-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/IMG_2064_1_0%20(1).JPG?alt=media&token=0c79aec3-10de-4c1a-81a8-48b28b2a0d9b" alt="Logo" class="w-8 h-8 rounded-full mr-3 editable-image">            
+                <a href="#hero" class="text-xl font-bold text-gray-800 hover:text-indigo-600 transition-colors duration-300 editable-content" contenteditable="false">全球淨零策略股份有限公司</a>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-gray-600 font-semibold">
+                <a href="#about" class="hover:text-indigo-600 transition-colors duration-300 py-1 editable-content" contenteditable="false">關於我們</a>
+                <a href="#highlights" class="hover:text-indigo-600 transition-colors duration-300 py-1 editable-content" contenteditable="false">永續小知識</a>          
+                <a href="#announcements" class="hover:text-indigo-600 transition-colors duration-300 py-1 editable-content" contenteditable="false">最新公告</a>
+                <a href="#services" class="hover:text-indigo-600 transition-colors duration-300 py-1 editable-content" contenteditable="false">服務項目</a>
+                <a href="#partners" class="hover:text-indigo-600 transition-colors duration-300 py-1 editable-content" contenteditable="false">聯盟夥伴</a>
+                <a href="#contact" class="hover:text-indigo-600 transition-colors duration-300 py-1 editable-content" contenteditable="false">聯絡我們</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-indigo-600 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/90 backdrop-blur-sm shadow-lg rounded-b-lg">
+            <nav class="flex flex-col items-center py-4 space-y-2 text-gray-600 font-semibold">
+                <a href="#about" class="hover:text-indigo-600 transition-colors duration-300 py-2 editable-content" contenteditable="false">關於我們</a>
+                <a href="#highlights" class="hover:text-indigo-600 transition-colors duration-300 py-2 editable-content" contenteditable="false">永續小知識</a>
+                <a href="#announcements" class="hover:text-indigo-600 transition-colors duration-300 py-2 editable-content" contenteditable="false">最新公告</a>
+                <a href="#services" class="hover:text-indigo-600 transition-colors duration-300 py-2 editable-content" contenteditable="false">服務項目</a>
+                <a href="#partners" class="hover:text-indigo-600 transition-colors duration-300 py-2 editable-content" contenteditable="false">聯盟夥伴</a>
+                <a href="#contact" class="hover:text-indigo-600 transition-colors duration-300 py-2 editable-content" contenteditable="false">聯絡我們</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section with Slideshow Background -->
+        <section id="hero" class="relative w-full h-screen flex items-center justify-center text-center p-6 overflow-hidden">
+            <div id="slideshow-container" class="hero-bg-slideshow-container">
+                <div class="bg-slide active editable-image"></div>
+                <div class="bg-slide editable-image"></div>
+                <div class="bg-slide editable-image"></div>
+                <div class="bg-slide editable-image"></div>
+            </div>
+
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="relative z-10 text-white max-w-4xl mx-auto">
+                <h1 class="text-4xl sm:text-4xl md:text-4xl font-bold mb-4 animate-fade-in-up editable-content" contenteditable="false">加速永續轉型：全方位ESG策略與人才賦能</h1>
+                <p class="text-lg sm:text-xl md:text-2xl mb-8 animate-fade-in-up delay-200 editable-content" contenteditable="false">為企業提供一站式永續轉型的解決方案</p>
+                <a href="#contact" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 editable-content" contenteditable="false">立即聯絡</a>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                <h2 class="section-header editable-content" contenteditable="false">關於我們</h2>
+                <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
+                    <div class="md:w-1/2">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/IMG_2064_1_0%20(1).JPG?alt=media&token=0c79aec3-10de-4c1a-81a8-48b28b2a0d9b" alt="我們的團隊" class="rounded-lg shadow-xl w-full h-auto md:h-80 object-contain editable-image">
+                    </div>
+                    <div class="md:w-1/2 text-gray-700 leading-relaxed">
+                        <p class="mb-4 editable-content" contenteditable="false">全球淨零策略股份有限公司（GNZS）致力於推動碳市場與淨零排放解決方案，為企業和機構提供創新的減碳與碳資產管理服務。</p>
+                        <p class="editable-content" contenteditable="false">我們為企業提供專業的教育訓練、ESG永續轉型的解決方案與顧問服務、綠領人才培訓與媒合，共同實現全球碳中和願景。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 連貫式動態輪播 -->
+        <section class="py-16 md:py-24">
+            <div class="relative overflow-hidden w-full py-4">
+                <div class="whitespace-nowrap inline-block animate-scroll-right">
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">創新</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">效率</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">協作</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">品質</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">永續</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">未來</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">願景</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">轉型</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">媒合</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">凈零</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">減碳</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">ESG</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">ISO</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">碳中和</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">GRI</span>
+
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">創新</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">效率</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">協作</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">品質</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">永續</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">未來</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">願景</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">轉型</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">媒合</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">凈零</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">減碳</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">ESG</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">ISO</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">碳中和</span>
+                    <span class="text-3xl font-extrabold px-8 text-gray-300">GRI</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlights Section with Animated Content -->
+        <section id="highlights" class="py-20 px-6 bg-gray-100 overflow-hidden">
+            <div class="container mx-auto">
+                <h2 class="section-header editable-content" contenteditable="false">永續小知識</h2>
+                <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
+                    <!-- 左側 2D 圓形圖片區塊 -->
+                    <div class="md:w-1/2 flex justify-center items-center">
+                        <img id="highlight-image" src="" alt="永續小知識" class="w-64 h-64 md:w-80 md:h-80 rounded-full shadow-xl object-cover editable-image">
+                    </div>
+                    <!-- 右側文字區塊 -->
+                    <div class="md:w-1/2 text-gray-700 leading-relaxed text-center md:text-left">
+                        <h3 id="highlight-title" class="text-2xl font-bold mb-4 editable-content" contenteditable="false"></h3>
+                        <p id="highlight-text" class="editable-content" contenteditable="false"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Announcement Section -->
+        <section id="announcements" class="py-20 px-6 bg-yellow-50">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="section-header text-yellow-800">最新公告</h2>
+                <div class="card bg-yellow-100 border-yellow-300 p-8">
+                    <p class="text-xl text-yellow-900 leading-relaxed font-semibold">
+                        <span class="inline-block bg-yellow-300 rounded-full px-3 py-1 text-sm font-bold text-yellow-800 mr-2">最新</span>
+                        <a href="https://forms.gle/6fjs2d9Jdun6EMzN8" class="inline-block transition-transform duration-300 hover:scale-105">
+                            GHG Protocol x IFRS S1/S2中央大學說明會將在10/30開跑，名額有限請把握機會！
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section - Only 3 items -->
+        <section id="services" class="py-20 px-6 bg-gray-100">
+            <div class="container mx-auto">
+                <h2 class="section-header editable-content" contenteditable="false">服務項目</h2>                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="bg-white p-8 rounded-lg shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/Gemini_Generated_Image_oi8gz2oi8gz2oi8g-removebg-preview.png?alt=media&token=ff8e713d-717b-40d9-b5ef-8223b45ef71e" alt="專業教育訓練" class="h-24 mx-auto mb-4 object-contain editable-image">
+                        <h3 class="text-xl font-bold mb-2 editable-content" contenteditable="false">專業教育訓練</h3>
+                        <p class="text-gray-600 editable-content" contenteditable="false">提供企業各項永續規範的教育訓練，例如ISO14064系列、GHG Protocol以及IFRS S1/S2等。</p>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="bg-white p-8 rounded-lg shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/Gemini_Generated_Image_ke82scke82scke82-removebg-preview.png?alt=media&token=51f80b5d-9f58-4986-91a4-a0039789172f" alt="整合性ESG解決方案" class="h-24 mx-auto mb-4 object-contain editable-image">
+                        <h3 class="text-xl font-bold mb-2 editable-content" contenteditable="false">整合性ESG解決方案</h3>
+                        <p class="text-gray-600 editable-content" contenteditable="false">提供跨領域的專業知識，為企業提供最全面的ESG解決方案及顧問服務</p>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="bg-white p-8 rounded-lg shadow-xl text-center transform hover:scale-105 transition-transform duration-300">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/Gemini_Generated_Image_aah06paah06paah0-removebg-preview.png?alt=media&token=d011e65a-e246-4857-8a44-06ab78eede73" alt="綠領人才培訓與媒合" class="h-24 mx-auto mb-4 object-contain editable-image">
+                        <h3 class="text-xl font-bold mb-2 editable-content" contenteditable="false">綠領人才培訓與媒合</h3>
+                        <p class="text-gray-600 editable-content" contenteditable="false">培訓失業/待業青年成為具備專業技能的綠領人才並給予工作媒合機會</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners Section -->
+        <section id="partners" class="py-20 px-6 bg-gray-100">
+            <div class="container mx-auto max-w-5xl text-center">
+                <h2 class="section-header editable-content" contenteditable="false">聯盟夥伴</h2>
+                <div class="flex flex-col space-y-16">
+                    <!-- Partner 1 -->
+                    <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
+                        <div class="md:w-1/2 flex justify-center items-center">            
+                            <img src="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE_11-9-2025_19012_aierp.mgt.ncu.edu.tw%20(1).jpeg?alt=media&token=aadfa5b0-0722-41a4-b6e2-5abab122c844" alt="聯盟圖片" class="rounded-lg shadow-xl w-full md:w-96 object-contain editable-image">
+                        </div>
+                        <div class="md:w-1/2 text-gray-700 leading-relaxed text-center md:text-left">
+                            <h3 class="text-2xl font-bold mb-4 editable-content" contenteditable="false">AIEIA</h3>
+                            <p class="mb-4 editable-content" contenteditable="false">聯盟建立影響力管理框架，制定AI應用倫理與合規指南，促進社會責任實踐。提供教育訓練、企業參訪、技術諮詢等會員服務，涵蓋SAP、Salesforce、NLP、生醫與能源技術。</p>
+                            <a href="https://aierp.mgt.ncu.edu.tw/" class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 font-semibold underline editable-content" contenteditable="false">前往聯盟夥伴網站</a>
+                        </div>
+                    </div>
+
+                    <!-- Partner 2 -->
+                    <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
+                        <div class="md:w-1/2 flex justify-center items-center">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-09-12%20170908.png?alt=media&token=619053b6-4fa0-4118-8c8c-2e327df5d776" alt="國立中央大學 產學營運中心" class="rounded-lg shadow-xl w-full md:w-96 object-contain editable-image">
+                        </div>
+                        <div class="md:w-1/2 text-gray-700 leading-relaxed text-center md:text-left">
+                            <h3 class="text-2xl font-bold mb-4 editable-content" contenteditable="false">國立中央大學 產學營運中心</h3>
+                            <p class="mb-4 editable-content" contenteditable="false">國立中央大學為國內七所研究型大學之一，長期在資訊、電機及光電等領域居領先地位。旗下「創新育成中心」致力打造產業創新研發平台，結合校內優勢研發資源與創投資金，積極扶植具前瞻性與關鍵技術的中小企業。中心提供技術移轉、專家輔導、政府計畫申請、財稅服務與商務行銷等全方位支持，協助企業降低創業風險並提升競爭力，推動台灣產業從代工走向設計研發，成為國際級產學合作的重要推手。</p>
+                            <a href="http://www.iic.ncu.edu.tw/index.php" class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 font-semibold underline editable-content" contenteditable="false">前往聯盟夥伴網站</a>
+                        </div>
+                    </div>
+
+                    <!-- Partner 3 -->
+                    <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
+                        <div class="md:w-1/2 flex justify-center items-center">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE_12-9-2025_93119_www.ucscert.com.tw-artguru-removebg-preview.png?alt=media&token=61261b28-c20d-4a6a-b0ac-e304dfe72cb6" alt="環球國際驗證股份有限公司" class="rounded-lg shadow-xl w-full md:w-96 object-contain editable-image">
+                        </div>
+                        <div class="md:w-1/2 text-gray-700 leading-relaxed text-center md:text-left">
+                            <h3 class="text-2xl font-bold mb-4 editable-content" contenteditable="false">環球國際驗證股份有限公司</h3>
+                            <p class="mb-4 editable-content" contenteditable="false">成立於1999年之獨立第三方驗證機構，提供工商業、農業及各類組織的驗證、查驗、檢驗與教育訓練服務。UCS 獲得多國認證機構授權，並積極推動環境與碳排查驗，協助企業取得第三方查驗結果、接軌國際永續趨勢。公司秉持公正、專業與保密原則，致力於成為企業信賴的驗證與永續發展夥伴。</p>  
+                            <a href="https://www.ucscert.com.tw/zh/" class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 font-semibold underline editable-content" contenteditable="false">前往聯盟夥伴網站</a>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                <h2 class="section-header editable-content" contenteditable="false">聯絡我們</h2>
+                <div class="max-w-xl mx-auto text-center">
+                    <p class="text-gray-600 mb-8 editable-content" contenteditable="false">如果您對我們的服務感興趣，請填寫下方表格，我們將盡快與您聯繫。</p>
+                    <form action="https://formspree.io/f/mzzawkyp" method="POST">
+                        <input type="text" name="name" placeholder="您的姓名" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4">
+                        <input type="email" name="email" placeholder="您的電子郵件" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4">
+                        <textarea name="message" placeholder="您的訊息" rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4"></textarea>
+                        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-md shadow-lg hover:bg-indigo-700 transition-colors duration-300">送出訊息</button>
+                    </form>
+                    <!-- 新增公司地址與電話 -->
+                    <div class="mt-8 text-gray-700">
+                        <p class="mb-2">
+                            <i class="fas fa-map-marker-alt text-indigo-600 mr-2"></i>
+                            <span class="font-semibold editable-content" contenteditable="false">公司地址：台北市信義區信義路五段七號57樓之一</span>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-map-marker-alt text-indigo-600 mr-2"></i>
+                            <span class="font-semibold editable-content" contenteditable="false">Address：57F.-1, No. 7, Sec. 5, Xinyi Rd., Xinyi Dist., Taipei City 110202, Taiwan (R.O.C.) (Taipei 101)</span>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-phone-alt text-indigo-600 mr-2"></i>
+                            <span class="font-semibold editable-content" contenteditable="false">連絡電話：02-87292939</span>
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope text-indigo-600 mr-2"></i>
+                            <a href="mailto:Gnzstw2050@gmail.com" class="font-semibold editable-content" contenteditable="false">電子郵件：Gnzstw2050@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-8 px-6 text-center">
+        <div class="container mx-auto">
+            <p class="editable-content" contenteditable="false">&copy; 2025 全球淨零策略股份有限公司. All Rights Reserved.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#" class="hover:text-white transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-white transition-colors duration-300"><i class="fab fa-line"></i></a>
+                <a href="#" class="hover:text-white transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Edit Modal -->
+    <div id="image-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white p-8 rounded-lg shadow-2xl max-w-lg w-full transform transition-all scale-95 duration-300">
+            <h3 class="text-2xl font-bold mb-4">更改圖片</h3>
+            <p class="mb-4 text-gray-600">請貼上新的圖片網址或從電腦上傳。</p>
+            <input id="image-url-input" type="text" placeholder="https://example.com/new-image.jpg" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-2">
+            <div class="flex items-center space-x-2 my-2 text-gray-500">
+                <div class="flex-grow h-px bg-gray-300"></div>
+                <span>或</span>
+                <div class="flex-grow h-px bg-gray-300"></div>
+            </div>
+            <input id="image-file-input" type="file" accept="image/*" class="w-full p-3 border border-gray-300 mb-4 text-gray-600 rounded-md">
+            <div class="flex justify-end space-x-4">
+                <button id="cancel-button" class="bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-md hover:bg-gray-400 transition-colors duration-300">取消</button>
+                <button id="save-image-button" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-md hover:bg-indigo-700 transition-colors duration-300">儲存</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('header');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const editableElements = document.querySelectorAll('.editable-content');
+            const editableImages = document.querySelectorAll('.editable-image');
+            const imageModal = document.getElementById('image-modal');
+            const imageUrlInput = document.getElementById('image-url-input');
+            const imageFileInput = document.getElementById('image-file-input');
+            const saveImageButton = document.getElementById('save-image-button');
+            const cancelButton = document.getElementById('cancel-button');
+            
+            let isEditMode = false;
+            let currentImageElement = null;
+
+            // Header fade-out on scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile menu toggle
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // --- 圖片輪播功能（優化：修正第3張網址網域） ---
+            const slideshowContainer = document.getElementById('slideshow-container');
+            const slides = slideshowContainer.querySelectorAll('.bg-slide');
+            const images = [
+                'https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/Gemini_Generated_Image_ti4rl1ti4rl1ti4r.png?alt=media&token=f7b14477-6955-4f30-b287-59b9c17ccf99',
+                'https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/Gemini_Generated_Image_hehu2ahehu2ahehu.png?alt=media&token=79cc98d0-032f-46cd-928d-22afd03826f7',
+                'https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/Gemini_Generated_Image_2y5zw72y5zw72y5z.png?alt=media&token=4691364f-97ca-4b24-861c-dd7f490b2c66',
+                'https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/Gemini_Generated_Image_9qcgx29qcgx29qcg.png?alt=media&token=7b7e3fc1-b6c0-4dc5-935f-0fff9aa14a1b'
+            ];
+            let currentSlideIndex = 0;
+
+            // 初始化背景圖片
+            slides.forEach((slide, index) => {
+                slide.style.backgroundImage = `url(${images[index]})`;
+            });
+
+            function updateSlideshow() {
+                slides.forEach(slide => slide.classList.remove('active'));
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                slides[currentSlideIndex].classList.add('active');
+            }
+
+            // 初始設定
+            slides[currentSlideIndex].classList.add('active');
+            setInterval(updateSlideshow, 5000);
+
+            // --- 永續小知識動態輪播功能（3 筆） ---
+            const highlightItems = [
+                {
+                    image: 'https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/362b5139-28ca-4cb7-b4cb-0bbd83868e06%20(1).png?alt=media&token=02641d93-ce34-4614-9676-f7f9a2783892',
+                    title: '減少碳足跡，從日常開始',
+                    text: '碳足跡代表著我們在生活與生產中所留下的溫室氣體痕跡。當我們選擇步行或搭乘大眾運輸、購買在地生產的食材、甚至只是隨手關掉一盞燈，都是在為地球減輕負擔。'
+                },
+                {
+                    image: 'https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/5b8ef208-0ed1-450c-90ef-ea227a18606b%20(1).png?alt=media&token=d83b0066-f0b4-4a2c-85be-11dd8c145697',
+                    title: '水，其實比黃金還珍貴',
+                    text: '地球表面覆蓋著藍色的海洋，但真正能直接飲用的淡水卻不到全球水量的 1%。在氣候變遷和人口成長的壓力下，水資源正逐漸稀缺。節約用水不只是口號，而是一種生活態度。'
+                },
+                {
+                    image: 'https://firebasestorage.googleapis.com/v0/b/noobboy200-a0e9d.firebasestorage.app/o/64822c86-34ff-4596-8cd1-38ba88046b89%20(1).png?alt=media&token=ef4d61ce-04af-45ba-9fb9-9e734beb8758',
+                    title: '循環經濟：讓資源重新呼吸',
+                    text: '傳統的經濟模式像是一條直線：製造、使用、丟棄。而循環經濟則是一個圓，讓資源不斷再生。當我們選擇修理而不是丟棄，支持回收再製的產品，就等於為資源賦予新的生命。'
+                }
+            ];
+            const highlightImage = document.getElementById('highlight-image');
+            const highlightTitle = document.getElementById('highlight-title');
+            const highlightText = document.getElementById('highlight-text');
+            let currentHighlightIndex = 0;
+
+            function updateHighlights() {
+                const currentItem = highlightItems[currentHighlightIndex];
+                // 淡出
+                highlightImage.classList.add('slide-fade-out');
+                highlightTitle.classList.add('slide-fade-out');
+                highlightText.classList.add('slide-fade-out');
+                setTimeout(() => {
+                    // 更新內容
+                    highlightImage.src = currentItem.image;
+                    highlightTitle.textContent = currentItem.title;
+                    highlightText.textContent = currentItem.text;
+                    // 移除淡出、加上淡入
+                    highlightImage.classList.remove('slide-fade-out');
+                    highlightTitle.classList.remove('slide-fade-out');
+                    highlightText.classList.remove('slide-fade-out');
+                    highlightImage.classList.add('slide-fade-in');
+                    highlightTitle.classList.add('slide-fade-in');
+                    highlightText.classList.add('slide-fade-in');
+                }, 800);
+                currentHighlightIndex = (currentHighlightIndex + 1) % highlightItems.length;
+            }
+
+            // 初始載入 & 每5秒更新
+            updateHighlights();
+            setInterval(updateHighlights, 5000);
+        });
+    </script>
+</body>
+</html>
